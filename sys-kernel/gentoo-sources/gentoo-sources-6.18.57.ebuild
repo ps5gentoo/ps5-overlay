@@ -24,6 +24,17 @@ pkg_pretend() {
 
 src_prepare() {
 	kernel-2_src_prepare
+
+	# Playstation 5 Patches
+	if [[ -d "${FILESDIR}" ]]; then
+		eapply "${FILESDIR}"/*.patch
+	fi
+
+	# Playstation 5 Kernelconfig
+	if [[ -f "${FILESDIR}/linux.config" ]]; then
+		cp "${FILESDIR}/linux.config" "${S}/.config"
+	fi
+
 	rm "${S}/tools/testing/selftests/tc-testing/action-ebpf"
 }
 
